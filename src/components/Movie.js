@@ -2,19 +2,29 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { DELETE_MOVIE } from "../actions/movieActions";
+import { ADD_FAVORITE } from "../actions/favoritesActions";
 
 const Movie = (props) => {
   const { id } = useParams();
   const { push } = useHistory();
 
-  const movies = useSelector((store) => store.movies);
-
+  const movies = useSelector((store) => store.movies.movies);
   const movie = movies.find((movie) => movie.id === Number(id));
 
   const dispatch = useDispatch();
-  const eventHandler = () => {
+
+  const handlerDelete = () => {
     dispatch({ type: DELETE_MOVIE, payload: movie.id });
     push("/movies");
+  };
+
+  const isFav = useSelector((store) =>
+    store.favorites.favorites.includes(movie)
+  );
+  const handlerFav = () => {
+    if (!isFav) {
+      dispatch({ type: ADD_FAVORITE, payload: movie });
+    }
   };
 
   return (
@@ -46,13 +56,16 @@ const Movie = (props) => {
       </div>
       <div className="px-5 py-3 border-t border-zinc-200 flex justify-end gap-2">
         <button
-          onClick={eventHandler}
+          onClick={handlerDelete}
           type="button"
           className="myButton bg-red-600 hover:bg-red-500"
         >
           Sil
         </button>
-        <button className="myButton bg-blue-600 hover:bg-blue-500 ">
+        <button
+          onClick={handlerFav}
+          className="myButton bg-blue-600 hover:bg-blue-500 "
+        >
           Favorilere ekle
         </button>
       </div>

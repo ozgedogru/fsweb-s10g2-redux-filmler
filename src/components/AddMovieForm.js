@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ADD_MOVIE, addMovie } from "./../actions/movieActions";
+import { ADD_MOVIE } from "./../actions/movieActions";
 
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -27,17 +27,17 @@ const AddMovieForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newMovie = {
+    const lastMovie = {
       id: Date.now(),
       //...Object.fromEntries(Object.entries(movie)),
       title: movie.title,
       director: movie.director,
-      genre: movie.director,
+      genre: movie.genre,
       metascore: movie.metascore,
       description: movie.description,
     };
 
-    dispatch({ type: ADD_MOVIE, payload: newMovie });
+    dispatch({ type: ADD_MOVIE, payload: lastMovie });
     push("/movies");
   };
 
