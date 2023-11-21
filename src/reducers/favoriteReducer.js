@@ -21,6 +21,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         displayFavorites: !state.displayFavorites,
       };
+    case REMOVE_FAVORITE:
+      return {
+        ...state,
+        favorites: state.favorites.filter((item) => action.payload !== item.id),
+      };
     default:
       return state;
   }
