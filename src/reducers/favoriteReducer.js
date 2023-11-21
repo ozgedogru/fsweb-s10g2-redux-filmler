@@ -19,6 +19,7 @@ const reducer = (state = initialState, action) => {
     case TOGGLE_FAVORITES:
       return {
         ...state,
+        displayFavorites: !state.displayFavorites,
       };
     default:
       return state;
